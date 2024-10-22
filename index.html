@@ -23,10 +23,21 @@
             height: 300px; /* Adjust as needed */
             animation: none; /* Default state, no animation */
         }
+        .gif-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            background: url('https://i.gifer.com/J8up.webp') no-repeat center center;
+            background-size: cover;
+        }
 
         .image {
             width: 100%;
-            height: auto;
+            height: 100%;
             transition: clip-path 0.5s ease; /* Smooth transition */
             clip-path: inset(0 0 0 0); /* Initial state with full image */
         }
@@ -42,17 +53,21 @@
 </head>
 <body>
     <div class="container">
+        <div class="gif-background" id="gifBackground"></div>
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWCrXWn_1yQ8oCb3DE342FNdg3uqxSyPY2q7uDOamA1Fv-AO1Vfwn7uuhn-m0Dzrqw6WE&usqp=CAU" class="image" alt="Image">
     </div>
+    <button id="playButton">Play Animation</button>
+
 
     <script>
         function slashImage() {
             const image = document.querySelector('.image');
             const container = document.querySelector('.container');
             const body = document.body;
+            const gifBackground = document.getElementById('gifBackground');
 
             // Change the clip-path for a diagonal reveal
-            image.style.clipPath = 'polygon(0 0, 100% 0, 0 100%)'; // Diagonal from top-left to bottom-right
+            image.style.clipPath = 'polygon(0 0, 100% 0, 0 100%)';
 
             // Play sound effect
             const sound = new Audio('path-to-your-sound-effect.mp3'); // Replace with your sound file path
@@ -64,17 +79,23 @@
                 body.style.backgroundColor = 'black'; // Change back to black after flash
             }, 300); // Flash duration
 
+            // Show the GIF background
+            gifBackground.style.opacity = 1;
+            
+            setTimeout(() => {
+            gifBackground.style.opacity = 0;
+            }, 200); // Duration to keep the GIF visible
+
             // Add shake animation
             container.style.animation = 'shake 0.5s ease';
-            
+
             // Remove animation class after it finishes to allow re-triggering
             setTimeout(() => {
                 container.style.animation = 'none';
             }, 500); // Match duration of shake animation
         }
 
-        // Call the function when you want the animation to start
-        document.addEventListener('click', slashImage);
+        document.getElementById('playButton').addEventListener('click', slashImage);
     </script>
 </body>
 </html>
