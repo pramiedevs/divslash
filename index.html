@@ -10,9 +10,11 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f0f0f0;
+            background-color: black; /* Initial background color */
             margin: 0;
+            transition: background-color 0.5s ease; /* Smooth transition for background color */
         }
+
 
         .container {
             position: relative;
@@ -40,20 +42,27 @@
 </head>
 <body>
     <div class="container">
-        <img src="your-image.jpg" class="image" alt="Image">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWCrXWn_1yQ8oCb3DE342FNdg3uqxSyPY2q7uDOamA1Fv-AO1Vfwn7uuhn-m0Dzrqw6WE&usqp=CAU" class="image" alt="Image">
     </div>
 
     <script>
         function slashImage() {
             const image = document.querySelector('.image');
             const container = document.querySelector('.container');
+            const body = document.body;
 
-            // Change the clip-path to reveal half of the image
-            image.style.clipPath = 'inset(0 50% 0 0)'; // For vertical
+            // Change the clip-path for a diagonal reveal
+            image.style.clipPath = 'polygon(0 0, 100% 0, 0 100%)'; // Diagonal from top-left to bottom-right
 
             // Play sound effect
             const sound = new Audio('path-to-your-sound-effect.mp3'); // Replace with your sound file path
             sound.play();
+
+            // Flash background color
+            body.style.backgroundColor = 'white';
+            setTimeout(() => {
+                body.style.backgroundColor = 'black'; // Change back to black after flash
+            }, 300); // Flash duration
 
             // Add shake animation
             container.style.animation = 'shake 0.5s ease';
